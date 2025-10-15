@@ -1,1 +1,19 @@
 
+body{
+    background-color: black;
+}
+p{
+    color: white;
+    line-height: 2em;
+}
+h1{
+    color: white; 
+}
+h3{
+    color: white; 
+}
+img{
+    width: 300px; 
+    float: left; 
+    
+}
