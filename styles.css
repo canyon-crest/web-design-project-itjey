@@ -1,19 +1,161 @@
 
-body{
+/* body{
     background-color: black;
+    color: white; 
+    font-family: Comic Sans MS; 
 }
 p{
     color: white;
     line-height: 2em;
+    background-color: blueviolet; 
+    padding: 20px; 
+    border: 2px dotted white; 
+
 }
 h1{
-    color: white; 
+    background-color: orangered;
+    border: 5px solid white;
+    border-radius: 15px; 
+    padding: 20px; 
+    text-align: center;  
+    margin: 40px auto; 
+    color: black; 
+    
+}
+h2{
+    text-align:center;
+    font-style: italic; 
 }
 h3{
     color: white; 
+    background-color: orangered; 
+    border: 2px solid white; 
+    width: 50%; 
+    padding: 10px; 
+    border-radius: 10px;
+    border-left: 20px solid rgb(44, 42, 42); 
 }
 img{
-    width: 300px; 
+    width: 150px; 
+    border: 3px solid white; 
+    height: 100px; 
+    border-radius: 15px;
     float: left; 
+    margin-right: 20px; 
     
 }
+/* PSEUDO SELECTORS */ /*
+a:link{
+    color: rgb(44, 42, 42); 
+    font-weight: bold; 
+    text-decoration: none; 
+}
+a:visited{
+    color: red; 
+}
+a:hover
+{
+    color: black; 
+    text-decoration: underline; 
+}
+a:active{
+    color: red; 
+} */
+/* ID RUlES */
+
+
+    body{
+         background-color: #000000;
+         color: #cbd5e1;
+         font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    #container{
+        width: 800px; 
+        margin: 20px auto; 
+    }
+
+    p{
+         color: #cbd7e6;
+         line-height: 1.8em;
+         background-color: #070707;
+         padding: 16px;
+         border: 1px solid #111111;
+         border-radius: 0;
+    }
+
+    h1{
+         background-color: #050506;
+         border: 1px solid #ffffff;
+         border-radius: 0;
+         padding: 18px;
+         text-align: center;
+         margin: 40px auto;
+         color: #cbd5e1;
+    }
+
+    h2{
+         text-align: center;
+         font-style: italic;
+         color: #d1d9e6;
+    }
+
+    h3{
+         color: #e6f0fb;
+         background-color: #050506;
+         width: 50%;
+         padding: 10px;
+         border-left: 8px solid #444444;
+    }
+
+    img{
+         width: 150px;
+         border: 2px solid #111111;
+         height: auto;
+         border-radius: 0;
+         float: left;
+         margin-right: 20px;
+    }
+    /* PSEUDO SELECTORS */
+    a:link{
+         color: #60a5fa;
+         font-weight: 600;
+         text-decoration: none;
+    }
+    a:visited{
+         color: #93c5fd;
+    }
+    a:hover{
+         color: #e6f7ff;
+         text-decoration: underline;
+    }
+    a:active{
+         color: #bfe9f7;
+    }
+
+    #container{
+         max-width: 1100px;
+         margin: 0 auto;
+         padding: 24px;
+    }
+
+    #header{
+         background: none;
+         padding: 14px 20px;
+         border-radius: 0;
+         border: 1px solid #111111;
+    }
+
+    
+    #pic1{
+         height: 120px;
+         width: 120px;
+    }
+
+    .highlight{
+         background-color: #ffff00;
+         color: #000000;
+         padding: 2px;
+         border-radius: 0;
+         font-weight: bold;
+    } 
+  
