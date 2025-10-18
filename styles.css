@@ -63,21 +63,26 @@ a:active{
 } */
 /* ID RUlES */
 
+     .p1{
+           background-color: #222222;
+           color: #cbd5e1;
+           padding: 16px;
+           border: 1px solid #111111;
+           border-radius: 0;
+           
+     }
 
+          
     body{
          background-color: #000000;
          color: #cbd5e1;
          font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    #container{
-        width: 800px; 
-        margin: 20px auto; 
-    }
 
     p{
          color: #cbd7e6;
          line-height: 1.8em;
-         background-color: #070707;
+         background-color: #222222;
          padding: 16px;
          border: 1px solid #111111;
          border-radius: 0;
@@ -101,8 +106,8 @@ a:active{
 
     h3{
          color: #e6f0fb;
-         background-color: #050506;
-         width: 50%;
+         background-color: none;
+         width: 20%;
          padding: 10px;
          border-left: 8px solid #444444;
     }
@@ -114,7 +119,18 @@ a:active{
          border-radius: 0;
          float: left;
          margin-right: 20px;
+         
     }
+    img{
+          transition: transform .28s ease, box-shadow .28s ease;
+          will-change: transform;
+          transform-origin: center center;
+     }
+     img:hover{
+          transform: scale(1.2);
+          z-index: 20;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+     }
     /* PSEUDO SELECTORS */
     a:link{
          color: #60a5fa;
@@ -154,25 +170,24 @@ a:active{
     }
 
     .highlight{
-         background-color: #ffff00;
+         background-color: #8fd3de;
          color: #000000;
          padding: 2px;
          border-radius: 0;
          font-weight: bold;
     } 
     #sidebar{
-           background-color: #111111;
+           background-color: none;
            padding: 16px;
-           border: 1px solid #222222;
+          /* border: 1px solid #111111; */
            margin-bottom: 20px;
            float: right; 
-           margin: 20px;
-    }
+           width: 500px;}
     #sidebar h3{
           border: none; 
           text-align: left; 
-          padding: 5px;  
-          margin-top: 15px; 
+          padding: 5px;
+          margin-top: 50px; 
     }
     li{
           font-style: italic;
