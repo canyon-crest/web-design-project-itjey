@@ -70,6 +70,177 @@
       </div>
     </section>
 
+    <!-- Games Section -->
+    <h3>Games</h3>
+    <section class="games" aria-label="Games">
+      <!-- Tic Tac Toe (2-player, no JS) -->
+      <section class="ttt" aria-label="Tic Tac Toe (two players)">
+        <!-- Turn state -->
+        <input type="radio" name="turn" id="turnX" checked>
+        <input type="radio" name="turn" id="turnO">
+
+        <!-- Cell states: each cell has 3 radios: empty (default), X, O -->
+        <!-- Row 1 -->
+        <input type="radio" name="c1" id="c1e" checked>
+        <input type="radio" name="c1" id="c1x">
+        <input type="radio" name="c1" id="c1o">
+
+        <input type="radio" name="c2" id="c2e" checked>
+        <input type="radio" name="c2" id="c2x">
+        <input type="radio" name="c2" id="c2o">
+
+        <input type="radio" name="c3" id="c3e" checked>
+        <input type="radio" name="c3" id="c3x">
+        <input type="radio" name="c3" id="c3o">
+
+        <!-- Row 2 -->
+        <input type="radio" name="c4" id="c4e" checked>
+        <input type="radio" name="c4" id="c4x">
+        <input type="radio" name="c4" id="c4o">
+
+        <input type="radio" name="c5" id="c5e" checked>
+        <input type="radio" name="c5" id="c5x">
+        <input type="radio" name="c5" id="c5o">
+
+        <input type="radio" name="c6" id="c6e" checked>
+        <input type="radio" name="c6" id="c6x">
+        <input type="radio" name="c6" id="c6o">
+
+        <!-- Row 3 -->
+        <input type="radio" name="c7" id="c7e" checked>
+        <input type="radio" name="c7" id="c7x">
+        <input type="radio" name="c7" id="c7o">
+
+        <input type="radio" name="c8" id="c8e" checked>
+        <input type="radio" name="c8" id="c8x">
+        <input type="radio" name="c8" id="c8o">
+
+        <input type="radio" name="c9" id="c9e" checked>
+        <input type="radio" name="c9" id="c9x">
+        <input type="radio" name="c9" id="c9o">
+
+        <div class="ttt-ui" role="toolbar" aria-label="Game controls">
+          <div class="turn-indicator">
+            <label for="turnX" class="turn-btn x">X's Turn</label>
+            <label for="turnO" class="turn-btn o">O's Turn</label>
+          </div>
+          <a href="./" class="reset" aria-label="Reset game">Reset</a>
+        </div>
+
+        <div class="board" role="grid" aria-label="3 by 3 grid">
+          <div class="cell c1" role="gridcell">
+            <label for="c1x" class="pick x" aria-label="Place X in cell 1"></label>
+            <label for="c1o" class="pick o" aria-label="Place O in cell 1"></label>
+          </div>
+          <div class="cell c2" role="gridcell">
+            <label for="c2x" class="pick x" aria-label="Place X in cell 2"></label>
+            <label for="c2o" class="pick o" aria-label="Place O in cell 2"></label>
+          </div>
+          <div class="cell c3" role="gridcell">
+            <label for="c3x" class="pick x" aria-label="Place X in cell 3"></label>
+            <label for="c3o" class="pick o" aria-label="Place O in cell 3"></label>
+          </div>
+          <div class="cell c4" role="gridcell">
+            <label for="c4x" class="pick x" aria-label="Place X in cell 4"></label>
+            <label for="c4o" class="pick o" aria-label="Place O in cell 4"></label>
+          </div>
+          <div class="cell c5" role="gridcell">
+            <label for="c5x" class="pick x" aria-label="Place X in cell 5"></label>
+            <label for="c5o" class="pick o" aria-label="Place O in cell 5"></label>
+          </div>
+          <div class="cell c6" role="gridcell">
+            <label for="c6x" class="pick x" aria-label="Place X in cell 6"></label>
+            <label for="c6o" class="pick o" aria-label="Place O in cell 6"></label>
+          </div>
+          <div class="cell c7" role="gridcell">
+            <label for="c7x" class="pick x" aria-label="Place X in cell 7"></label>
+            <label for="c7o" class="pick o" aria-label="Place O in cell 7"></label>
+          </div>
+          <div class="cell c8" role="gridcell">
+            <label for="c8x" class="pick x" aria-label="Place X in cell 8"></label>
+            <label for="c8o" class="pick o" aria-label="Place O in cell 8"></label>
+          </div>
+          <div class="cell c9" role="gridcell">
+            <label for="c9x" class="pick x" aria-label="Place X in cell 9"></label>
+            <label for="c9o" class="pick o" aria-label="Place O in cell 9"></label>
+          </div>
+        </div>
+
+        <div class="status" role="status" aria-live="polite">
+          <div class="xwin">X wins! 🎉</div>
+          <div class="owin">O wins! 🎉</div>
+          <div class="draw">It's a draw! 🤝</div>
+        </div>
+      </section>
+      
+      <!-- Pixel Draw (CSS-only) -->
+      <section class="draw" aria-label="Pixel drawing">
+        <form class="draw-form">
+          <div class="draw-controls">
+            <button type="reset" class="clear" aria-label="Clear drawing to a blank grid">Clear</button>
+          </div>
+          <div class="draw-grid" role="grid" aria-label="8 columns by 6 rows drawing grid">
+            <!-- 48 inputs + labels; some pre-checked for a smiley face -->
+            <!-- Row 1 -->
+            <input type="checkbox" id="d1"><label for="d1" class="px"></label>
+            <input type="checkbox" id="d2"><label for="d2" class="px"></label>
+            <input type="checkbox" id="d3"><label for="d3" class="px"></label>
+            <input type="checkbox" id="d4"><label for="d4" class="px"></label>
+            <input type="checkbox" id="d5"><label for="d5" class="px"></label>
+            <input type="checkbox" id="d6"><label for="d6" class="px"></label>
+            <input type="checkbox" id="d7"><label for="d7" class="px"></label>
+            <input type="checkbox" id="d8"><label for="d8" class="px"></label>
+            <!-- Row 2 (eyes at col3 and col6) -->
+            <input type="checkbox" id="d9"><label for="d9" class="px"></label>
+            <input type="checkbox" id="d10"><label for="d10" class="px"></label>
+            <input type="checkbox" id="d11"><label for="d11" class="px"></label>
+            <input type="checkbox" id="d12"><label for="d12" class="px"></label>
+            <input type="checkbox" id="d13"><label for="d13" class="px"></label>
+            <input type="checkbox" id="d14"><label for="d14" class="px"></label>
+            <input type="checkbox" id="d15"><label for="d15" class="px"></label>
+            <input type="checkbox" id="d16"><label for="d16" class="px"></label>
+            <!-- Row 3 -->
+            <input type="checkbox" id="d17"><label for="d17" class="px"></label>
+            <input type="checkbox" id="d18"><label for="d18" class="px"></label>
+            <input type="checkbox" id="d19"><label for="d19" class="px"></label>
+            <input type="checkbox" id="d20"><label for="d20" class="px"></label>
+            <input type="checkbox" id="d21"><label for="d21" class="px"></label>
+            <input type="checkbox" id="d22"><label for="d22" class="px"></label>
+            <input type="checkbox" id="d23"><label for="d23" class="px"></label>
+            <input type="checkbox" id="d24"><label for="d24" class="px"></label>
+            <!-- Row 4 (nose at col4) -->
+            <input type="checkbox" id="d25"><label for="d25" class="px"></label>
+            <input type="checkbox" id="d26"><label for="d26" class="px"></label>
+            <input type="checkbox" id="d27"><label for="d27" class="px"></label>
+            <input type="checkbox" id="d28"><label for="d28" class="px"></label>
+            <input type="checkbox" id="d29"><label for="d29" class="px"></label>
+            <input type="checkbox" id="d30"><label for="d30" class="px"></label>
+            <input type="checkbox" id="d31"><label for="d31" class="px"></label>
+            <input type="checkbox" id="d32"><label for="d32" class="px"></label>
+            <!-- Row 5 (smile corners up at col2 and col7) -->
+            <input type="checkbox" id="d33"><label for="d33" class="px"></label>
+            <input type="checkbox" id="d34"><label for="d34" class="px"></label>
+            <input type="checkbox" id="d35"><label for="d35" class="px"></label>
+            <input type="checkbox" id="d36"><label for="d36" class="px"></label>
+            <input type="checkbox" id="d37"><label for="d37" class="px"></label>
+            <input type="checkbox" id="d38"><label for="d38" class="px"></label>
+            <input type="checkbox" id="d39"><label for="d39" class="px"></label>
+            <input type="checkbox" id="d40"><label for="d40" class="px"></label>
+            <!-- Row 6 (smile center line at col3..6) -->
+            <input type="checkbox" id="d41"><label for="d41" class="px"></label>
+            <input type="checkbox" id="d42"><label for="d42" class="px"></label>
+            <input type="checkbox" id="d43"><label for="d43" class="px"></label>
+            <input type="checkbox" id="d44"><label for="d44" class="px"></label>
+            <input type="checkbox" id="d45"><label for="d45" class="px"></label>
+            <input type="checkbox" id="d46"><label for="d46" class="px"></label>
+            <input type="checkbox" id="d47"><label for="d47" class="px"></label>
+            <input type="checkbox" id="d48"><label for="d48" class="px"></label>
+          </div>
+        </form>
+        <p class="draw-hint">Tap squares to draw. Clear makes a blank grid.</p>
+      </section>
+    </section>
+
     <!-- CSS-Only Flipcards: Fun Facts -->
     <h3>Fun Facts</h3>
     <section class="flipcards" aria-label="Fun facts flip cards">
@@ -167,6 +338,7 @@
         <figcaption>Future goal: build helpful robots</figcaption>
       </figure>
     </div>
+    
     </div>
     <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
   </body>

@@ -327,10 +327,14 @@ body{ overflow-x: hidden; }
      opacity: 0;
      pointer-events: none;
 }
-.carousel{ position: relative; border: 1px solid #111111; background: #111; padding: 16px; border-radius: 0; overflow: hidden; }
-.carousel .slides{ display: flex; border-radius: 6px; width: 100%; animation: slide-cycle 12s infinite; }
+.carousel{ position: relative; border: 1px solid #111111; background: #111; padding: 16px; border-radius: 0; overflow: hidden; perspective: 1000px; }
+.carousel .slides{ display: flex; border-radius: 6px; width: 100%; animation: slide-cycle 12s infinite; transform-style: preserve-3d; }
 .carousel .slide{ margin: 0; min-width: 100%; flex: 0 0 100%; }
-.carousel img{ width: 100%; height: 380px; object-fit: cover; display: block; border: none; }
+.carousel .slide{ position: relative; }
+.carousel img{ width: 100%; height: 380px; object-fit: cover; display: block; border: none; will-change: transform; animation: kb-tilt 12s infinite ease-in-out; }
+.carousel .slide:nth-child(1) img{ animation-delay: 0s; transform-origin: 50% 40%; }
+.carousel .slide:nth-child(2) img{ animation-delay: -4s; transform-origin: 30% 50%; }
+.carousel .slide:nth-child(3) img{ animation-delay: -8s; transform-origin: 70% 60%; }
 .carousel figcaption{ padding: 8px 0; color: #cbd5e1; text-align: center; font-style: italic; }
 
 /* positioning the track using translateX */
@@ -343,6 +347,25 @@ body{ overflow-x: hidden; }
      70%{ transform: translateX(-200%); }
      98%{ transform: translateX(-200%); }
      100%{ transform: translateX(0%); }
+}
+
+/* Ken Burns + subtle 3D tilt synced to each slide's visible window
+      The timeline is segmented into thirds (0-33, 33-66, 66-100) to match the 12s cycle.
+      Negative animation-delays on nth-child sync each image to its own window. */
+@keyframes kb-tilt{
+     /* First segment */
+     0%   { transform: translateZ(0) scale(1.05) rotateZ(0deg) translateX(0) translateY(0); }
+     10%  { transform: translateZ(20px) scale(1.10) rotateZ(-0.3deg) translateX(-1%) translateY(0.4%); }
+     30%  { transform: translateZ(40px) scale(1.15) rotateZ(0.3deg) translateX(1%) translateY(-0.6%); }
+     /* Reset for second segment */
+     33%  { transform: translateZ(0) scale(1.05) rotateZ(0deg) translateX(0) translateY(0); }
+     43%  { transform: translateZ(20px) scale(1.10) rotateZ(0.25deg) translateX(0.8%) translateY(0.2%); }
+     63%  { transform: translateZ(40px) scale(1.15) rotateZ(-0.25deg) translateX(-0.8%) translateY(-0.4%); }
+     /* Reset for third segment */
+     66%  { transform: translateZ(0) scale(1.05) rotateZ(0deg) translateX(0) translateY(0); }
+     76%  { transform: translateZ(20px) scale(1.10) rotateZ(-0.2deg) translateX(-0.6%) translateY(0.3%); }
+     96%  { transform: translateZ(40px) scale(1.15) rotateZ(0.2deg) translateX(0.6%) translateY(-0.3%); }
+     100% { transform: translateZ(40px) scale(1.15) rotateZ(0.2deg) translateX(0.6%) translateY(-0.3%); }
 }
 
 /* arrows */
@@ -408,6 +431,7 @@ body{ overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce){
      .carousel .slides{ transition: none; animation: none; }
      img{ transition: none; }
+     .carousel img{ animation: none !important; }
 }
 
 /* Prevent scroll jump on arrow click by keeping radios visually hidden but in-flow */
@@ -441,6 +465,66 @@ body{ overflow-x: hidden; }
      h1{ background: #fff; color: #000; border: none; }
      p{ background: #fff; color: #000; border: none; }
 }
+
+/* Mini Quiz Game */
+.quiz{ margin: 28px 0 40px; border: 1px solid #111111; background: #0c0c0c; padding: 16px; }
+.quiz-form{ display: block; max-width: 800px; margin: 0 auto; }
+.quiz-form p#quiz-help{ color: #cbd5e1; font-style: italic; margin-bottom: 12px; text-align: center; }
+
+/* visually hide the radios but keep them in the flow (no scroll jump) */
+.quiz-radio{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+.quiz-q{ border: 1px solid #1f2937; padding: 16px; margin: 12px 0; background: #111; }
+.quiz-q legend{ color: #e6f0fb; font-weight: 600; margin-bottom: 10px; }
+.quiz-q .answers{ display: flex; gap: 12px; flex-wrap: wrap; }
+.quiz-q .btn{ cursor: pointer; background: #1f2937; color: #e5e7eb; border: 1px solid #374151; padding: 8px 12px; user-select: none; }
+.quiz-q .btn:hover{ background: #111827; }
+
+.quiz-q .feedback{ display: none; margin-top: 10px; }
+.quiz-q .feedback.correct{ color: #34d399; }
+.quiz-q .feedback.incorrect{ color: #f87171; }
+
+/* Show feedback depending on which radio is checked */
+#q1c:checked ~ .q1 .feedback.correct{ display: block; }
+#q1w1:checked ~ .q1 .feedback.incorrect,
+#q1w2:checked ~ .q1 .feedback.incorrect{ display: block; }
+
+#q2c:checked ~ .q2 .feedback.correct{ display: block; }
+#q2w1:checked ~ .q2 .feedback.incorrect,
+#q2w2:checked ~ .q2 .feedback.incorrect{ display: block; }
+
+#q3c:checked ~ .q3 .feedback.correct{ display: block; }
+#q3w1:checked ~ .q3 .feedback.incorrect,
+#q3w2:checked ~ .q3 .feedback.incorrect{ display: block; }
+
+/* Win condition: all three correct radios are checked */
+.quiz-win{ display: none; text-align: center; padding: 12px; margin-top: 16px; font-weight: 700; border: 1px solid #065f46; color: #10b981; background: rgba(16,185,129,0.08); }
+#q1c:checked ~ #q2c:checked ~ #q3c:checked ~ .quiz-win{ display: block; }
+
+/* Highlight selected answers with color feedback */
+#q1c:checked ~ .q1 label[for="q1c"],
+#q2c:checked ~ .q2 label[for="q2c"],
+#q3c:checked ~ .q3 label[for="q3c"]{ background: #064e3b; border-color: #065f46; color: #a7f3d0; }
+
+#q1w1:checked ~ .q1 label[for="q1w1"],
+#q1w2:checked ~ .q1 label[for="q1w2"],
+#q2w1:checked ~ .q2 label[for="q2w1"],
+#q2w2:checked ~ .q2 label[for="q2w2"],
+#q3w1:checked ~ .q3 label[for="q3w1"],
+#q3w2:checked ~ .q3 label[for="q3w2"]{ background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+
+.quiz-q .btn:focus-visible{ outline: 2px solid #93c5fd; outline-offset: 2px; }
+
+/* Light mode */
+#modeToggle:checked ~ #container .quiz{ background: #f9fafb; border-color: #e5e7eb; }
+#modeToggle:checked ~ #container .quiz-q{ background: #ffffff; border-color: #e5e7eb; }
+#modeToggle:checked ~ #container .quiz-q legend{ color: #111; }
+#modeToggle:checked ~ #container .quiz-form p#quiz-help{ color: #374151; }
+
+/* Reduced motion: nothing animated here, so only keep hover transitions lightweight */
+@media (prefers-reduced-motion: reduce){
+     .quiz-q .btn{ transition: none; }
+}
      /* Light mode tweaks for carousel */
      #modeToggle:checked ~ #container .carousel{
           background: #ffffff;
@@ -467,6 +551,122 @@ body{ overflow-x: hidden; }
   text-align: center;
 }
 
+/* Games: Tic Tac Toe */
+.games{ margin: 28px 0 60px; border: 1px solid #111111; background: #0c0c0c; padding: 16px; }
+.ttt{ position: relative; max-width: 420px; margin: 0 auto; }
+
+/* hide radios (accessible pattern) */
+.ttt input[type="radio"]{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+.ttt-ui{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.turn-btn{ background: #1f2937; color: #e5e7eb; border: 1px solid #374151; padding: 6px 10px; cursor: pointer; }
+.turn-btn.x{ color: #93c5fd; border-color: #1d4ed8; }
+.turn-btn.o{ color: #fca5a5; border-color: #b91c1c; }
+.reset{ color: #e5e7eb; text-decoration: underline; }
+
+.board{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: #1f2937; padding: 6px; border: 1px solid #374151; }
+.cell{ position: relative; width: 120px; height: 120px; background: #0b0f16; border: 1px solid #374151; display: flex; align-items: center; justify-content: center; }
+.cell .pick{ position: absolute; inset: 0; }
+.cell .pick{ cursor: pointer; }
+
+/* render marks based on state */
+.c1::after{ content: ""; }
+#c1x:checked ~ .board .c1::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c1o:checked ~ .board .c1::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c2x:checked ~ .board .c2::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c2o:checked ~ .board .c2::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c3x:checked ~ .board .c3::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c3o:checked ~ .board .c3::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c4x:checked ~ .board .c4::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c4o:checked ~ .board .c4::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c5x:checked ~ .board .c5::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c5o:checked ~ .board .c5::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c6x:checked ~ .board .c6::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c6o:checked ~ .board .c6::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c7x:checked ~ .board .c7::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c7o:checked ~ .board .c7::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c8x:checked ~ .board .c8::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c8o:checked ~ .board .c8::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+#c9x:checked ~ .board .c9::after{ content: "X"; color: #93c5fd; font: 700 64px/1 monospace; }
+#c9o:checked ~ .board .c9::after{ content: "O"; color: #fca5a5; font: 700 64px/1 monospace; }
+
+/* click behavior: choose X or O depending on current turn */
+#turnX:checked ~ .board .cell .pick.x{ display: block; }
+#turnX:checked ~ .board .cell .pick.o{ display: none; }
+#turnO:checked ~ .board .cell .pick.x{ display: none; }
+#turnO:checked ~ .board .cell .pick.o{ display: block; }
+
+/* After a cell is chosen (x or o checked), disable further picks for that cell */
+#c1x:checked ~ .board .c1 .pick,
+#c1o:checked ~ .board .c1 .pick,
+#c2x:checked ~ .board .c2 .pick,
+#c2o:checked ~ .board .c2 .pick,
+#c3x:checked ~ .board .c3 .pick,
+#c3o:checked ~ .board .c3 .pick,
+#c4x:checked ~ .board .c4 .pick,
+#c4o:checked ~ .board .c4 .pick,
+#c5x:checked ~ .board .c5 .pick,
+#c5o:checked ~ .board .c5 .pick,
+#c6x:checked ~ .board .c6 .pick,
+#c6o:checked ~ .board .c6 .pick,
+#c7x:checked ~ .board .c7 .pick,
+#c7o:checked ~ .board .c7 .pick,
+#c8x:checked ~ .board .c8 .pick,
+#c8o:checked ~ .board .c8 .pick,
+#c9x:checked ~ .board .c9 .pick,
+#c9o:checked ~ .board .c9 .pick{ pointer-events: none; }
+
+/* Toggle turn manually via buttons (no auto alternation in pure CSS) */
+#turnX:checked ~ .ttt-ui .turn-btn.x{ background: #0b1a36; }
+#turnO:checked ~ .ttt-ui .turn-btn.o{ background: #2a0b0b; }
+
+/* Win detection: X combinations (chain checked radios with general sibling combinators) */
+#c1x:checked ~ #c2x:checked ~ #c3x:checked ~ .status .xwin,
+#c4x:checked ~ #c5x:checked ~ #c6x:checked ~ .status .xwin,
+#c7x:checked ~ #c8x:checked ~ #c9x:checked ~ .status .xwin,
+#c1x:checked ~ #c4x:checked ~ #c7x:checked ~ .status .xwin,
+#c2x:checked ~ #c5x:checked ~ #c8x:checked ~ .status .xwin,
+#c3x:checked ~ #c6x:checked ~ #c9x:checked ~ .status .xwin,
+#c1x:checked ~ #c5x:checked ~ #c9x:checked ~ .status .xwin,
+#c3x:checked ~ #c5x:checked ~ #c7x:checked ~ .status .xwin{ display: block; }
+
+/* Win detection: O combinations */
+#c1o:checked ~ #c2o:checked ~ #c3o:checked ~ .status .owin,
+#c4o:checked ~ #c5o:checked ~ #c6o:checked ~ .status .owin,
+#c7o:checked ~ #c8o:checked ~ #c9o:checked ~ .status .owin,
+#c1o:checked ~ #c4o:checked ~ #c7o:checked ~ .status .owin,
+#c2o:checked ~ #c5o:checked ~ #c8o:checked ~ .status .owin,
+#c3o:checked ~ #c6o:checked ~ #c9o:checked ~ .status .owin,
+#c1o:checked ~ #c5o:checked ~ #c9o:checked ~ .status .owin,
+#c3o:checked ~ #c5o:checked ~ #c7o:checked ~ .status .owin{ display: block; }
+
+.status{ text-align: center; margin-top: 12px; }
+.status > div{ display: none; font-weight: 700; padding: 8px; border: 1px solid #374151; }
+.status .xwin{ color: #93c5fd; border-color: #1d4ed8; background: rgba(59,130,246,0.12); }
+.status .owin{ color: #fca5a5; border-color: #b91c1c; background: rgba(248,113,113,0.12); }
+.status .draw{ color: #fbbf24; border-color: #b45309; background: rgba(251,191,36,0.12); }
+
+/* Light mode tweaks */
+#modeToggle:checked ~ #container .games{ background: #f9fafb; border-color: #e5e7eb; }
+#modeToggle:checked ~ #container .board{ background: #e5e7eb; border-color: #d1d5db; }
+#modeToggle:checked ~ #container .cell{ background: #ffffff; border-color: #d1d5db; }
+
+/* Pixel Drawing */
+.draw{ margin-top: 18px; border-top: 1px dashed #30363d; padding-top: 16px; }
+.draw-controls{ display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 10px; }
+.draw .clear{ background: #0b0f16; color: #e5e7eb; border: 1px solid #374151; padding: 6px 12px; cursor: pointer; text-decoration: none; display: inline-block; }
+.draw-grid{ display: grid; grid-template-columns: repeat(8, 32px); grid-auto-rows: 32px; gap: 6px; justify-content: center; padding: 12px; border: 1px solid #374151; background: #0b0f16; }
+.draw-grid input[type="checkbox"]{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.draw-grid .px{ width: 32px; height: 32px; border: 1px solid #1f2937; background: #0f172a; cursor: pointer; }
+.draw-grid input[type="checkbox"]:checked + label.px{ background: #ffffff; border-color: #ffffff; }
 #toggleLabel:hover {
   background-color: #222222;
 }
