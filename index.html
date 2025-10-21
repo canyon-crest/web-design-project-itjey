@@ -7,9 +7,24 @@
   
   <body>
      <input type="checkbox" id="modeToggle" hidden>
-    <label for="modeToggle" id="toggleLabel">Toggle Light Mode</label>
+     <input type="checkbox" id="musicToggle" hidden>
+    <div class="top-controls" role="toolbar" aria-label="Display and audio controls">
+      <label for="modeToggle" id="toggleLabel">Toggle Light Mode</label>
+      <label for="musicToggle" id="musicLabel">Music</label>
+    </div>
+    <div id="musicPanel" aria-live="polite" aria-label="Background music player">
+      <audio id="bgAudio" controls preload="metadata" loop>
+        <source src="audio/music.mp3" type="audio/mpeg">
+        <source src="audio/music.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+      </audio>
+      <p class="music-note">Music from #Uppbeat (free for Creators!):
+        <a href="https://uppbeat.io/t/dominique-charpentier/la-cave" target="_blank" rel="noopener">uppbeat.io/t/dominique-charpentier/la-cave</a><br>
+        License code: G7ZQ4GVTLL5PNAVW
+      </p>
+    </div>
     <div id ="container">
-    <h1>About Jey</h1>
+  <h1><span class="typewriter">About Jey</span></h1>
     <h2>By: Jey</h2>
     
     <h3>Nickname and Slogan</h3>

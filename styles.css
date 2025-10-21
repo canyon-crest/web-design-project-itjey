@@ -98,6 +98,34 @@ a:active{
           margin: 40px auto;
      }
 
+     /* Typewriter effect for title */
+     h1 .typewriter{
+          display: inline-block;
+          overflow: hidden; /* hide the text as it types */
+          white-space: nowrap;
+          border-right: 2px solid #e6f0fb; /* caret */
+          width: 0;
+          animation: typewriter 3.2s steps(16, end) 0.3s forwards, blink 900ms steps(1, end) infinite;
+     }
+
+     @keyframes typewriter{
+          from{ width: 0; }
+          to{ width: 16ch; }
+     }
+     @keyframes blink{
+          from{ border-right-color: transparent; }
+          50%{ border-right-color: #e6f0fb; }
+          to{ border-right-color: transparent; }
+     }
+
+     /* Light mode caret color */
+     #modeToggle:checked ~ #container h1 .typewriter{ border-right-color: #111; }
+
+     /* Reduced motion: show full text, stop animations */
+     @media (prefers-reduced-motion: reduce){
+          h1 .typewriter{ width: auto; animation: none; border-right: none; }
+     }
+
 
 
     h2{
@@ -461,6 +489,40 @@ body{ overflow-x: hidden; }
      color: #111 !important;
      border-color: #ddd;
 }
+
+/* Top controls layout */
+.top-controls{ display: flex; align-items: center; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.top-controls #toggleLabel,
+.top-controls #musicLabel{
+     margin: 8px 0;
+     display: inline-block;
+     width: auto;
+}
+#musicLabel{
+     display: inline-block;
+     background-color: #444;
+     color: white;
+     padding: 8px 16px;
+     margin: 10px auto;
+     text-align: center;
+     cursor: pointer;
+     font-weight: bold;
+     transition: background-color 0.3s;
+     width: 200px;
+}
+#musicLabel:hover{ background-color: #222222; }
+
+/* Music panel (CSS-only toggle) */
+#musicPanel{ display: none; max-width: 1000px; margin: 0 auto 10px; padding: 10px; background: #222222; border: 1px solid #111111; }
+#musicPanel audio{ width: 100%; }
+.music-note{ font-size: 12px; color: #cbd5e1; margin: 6px 0 0; }
+
+#musicToggle:checked ~ #musicPanel{ display: block; }
+
+/* Light mode for music panel */
+/* Keep music panel dark even in light mode */
+#modeToggle:checked ~ #musicPanel{ background: #222222; color: #cbd5e1; border-color: #111111; }
+#modeToggle:checked ~ #musicPanel .music-note{ color: #cbd5e1; }
 /* Ensure #sidebar inherits link styles in light mode (no special overrides) */
 
 
