@@ -88,15 +88,15 @@ a:active{
          border-radius: 0;
     }
 
-     h1 {
-  background: linear-gradient(90deg, #222222, #555555);
-  color: white;
-  border: 1px solid white;
-  border-radius: 0;
-  padding: 20px;
-  text-align: center;
-  margin: 40px auto;
-}
+      h1 {
+          background: linear-gradient(90deg, #222222, #555555);
+          color: white;
+          border: 1px solid white;
+          border-radius: 0;
+          padding: 20px;
+          text-align: center;
+          margin: 40px auto;
+     }
 
 
 
@@ -170,6 +170,7 @@ a:active{
          height: 120px;
          width: 120px;
     }
+    
 
     .highlight{
          background-color: #8fd3de;
@@ -179,17 +180,25 @@ a:active{
          font-weight: bold;
     } 
     #sidebar{
-           background-color: none;
-           padding: 16px;
-          /* border: 1px solid #111111; */
-           margin-bottom: 20px;
-           float: right; 
-           width: 500px;}
+         background-color: #222222;
+         padding: 16px;
+         border: 1px solid #111111;
+         margin-left: 20px;
+         border-radius: 0;
+         display: flex;
+         flex-direction: column;
+    }
     #sidebar h3{
-          border: none; 
-          text-align: left; 
-          padding: 5px;
-          margin-top: 50px; 
+         border: none; 
+         text-align: left; 
+         padding: 0 0 8px 0;
+         margin: 0 0 8px 0; 
+    }
+    #sidebar ul{ 
+         margin: 0; 
+         padding-left: 18px; 
+         list-style: disc; 
+         flex: 1 1 auto; 
     }
     li{
           font-style: italic;
@@ -216,15 +225,191 @@ a:active{
     }
     @media (max-width: 768px)
     {
-          #sidebar{
-               display: none; 
-
-          }
+         #sidebar{ display: none; }
           h1{
                border: none; 
                width: 90%; 
           }
+          /* On mobile, let the first paragraph expand naturally */
+          .intro-main > .p1{ height: auto; overflow: visible; }
     }
+/* Enhance scrolling experience */
+html{
+     scroll-behavior: smooth;
+}
+
+/* Sticky sidebar on large screens */
+/* Layout wrapper for first paragraph and sidebar */
+.intro{
+     display: flex;
+     align-items: flex-start;
+     gap: 20px;
+}
+.intro-main{ flex: 1 1 0; min-width: 0; }
+.intro #sidebar{ flex: 1 1 0; }
+/* Natural heights with aligned tops */
+.intro-main > .p1{ margin: 0; box-sizing: border-box; }
+.intro #sidebar{ box-sizing: border-box; }
+/* Prevent bottom scroll bar */
+body{ overflow-x: hidden; }
+
+/* CSS-Only LIGHTBOX using :target */
+.lightbox{
+     position: fixed;
+     inset: 0;
+     background: rgba(0,0,0,0.85);
+     display: none;
+     align-items: center;
+     justify-content: center;
+     padding: 24px;
+     z-index: 1000;
+}
+.lightbox:target{ display: flex; }
+.lightbox figure{ margin: 0; max-width: min(100%, 960px); width: 100%; }
+.lightbox img{ width: 100%; height: auto; display: block; border: none; border-radius: 0; box-shadow: 0 8px 32px rgba(0,0,0,0.6); }
+.lightbox figcaption{ text-align: center; margin-top: 12px; color: #e6f0fb; }
+.lightbox .lb-backdrop{ position: absolute; inset: 0; }
+.lightbox img:hover{ transform: none; box-shadow: 0 8px 32px rgba(0,0,0,0.6); }
+.lb-close{
+     position: fixed;
+     top: 16px;
+     right: 16px;
+     font-size: 32px;
+     color: #fff;
+     text-decoration: none;
+     background: rgba(255,255,255,0.12);
+     width: 40px; height: 40px; line-height: 40px; text-align: center; border-radius: 50%;
+}
+.lb-close:hover{ background: rgba(255,255,255,0.24); }
+.lightbox-trigger{ display: inline-block; }
+
+/* CSS-Only CAROUSEL powered by radio buttons */
+.gallery{ margin: 24px 0; }
+.gallery input[type="radio"]{
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     margin: -1px;
+     padding: 0;
+     border: 0;
+     overflow: hidden;
+     clip: rect(0 0 0 0);
+     clip-path: inset(50%);
+     white-space: nowrap;
+     opacity: 0;
+     pointer-events: none;
+}
+.carousel{ position: relative; border: 1px solid #111111; background: #111; padding: 16px; border-radius: 0; overflow: hidden; }
+.carousel .slides{ display: flex; border-radius: 6px; }
+.carousel .slide{ margin: 0; min-width: 100%; }
+.carousel img{ width: 100%; height: auto; display: block; border: none; }
+.carousel figcaption{ padding: 8px 0; color: #cbd5e1; text-align: center; font-style: italic; }
+
+/* positioning the track using translateX */
+#slide1:checked ~ .carousel .slides{ transform: translateX(0%); }
+#slide2:checked ~ .carousel .slides{ transform: translateX(-100%); }
+#slide3:checked ~ .carousel .slides{ transform: translateX(-200%); }
+.carousel .slides{ transition: transform .6s cubic-bezier(.2,.6,.2,1); }
+
+/* arrows */
+.controls label{ position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #ffffff; width: 56px; height: 56px; line-height: 52px; text-align: center; border-radius: 50%; cursor: pointer; user-select: none; z-index: 2; border: 2px solid rgba(255,255,255,0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.4); font-size: 32px; }
+.controls .prev{ left: 12px; }
+.controls .next{ right: 12px; }
+.controls label:hover{ background: rgba(0,0,0,0.8); border-color: #ffffff; }
+
+/* show only the relevant pair of arrows depending on selected slide */
+.controls .prev, .controls .next{ display: none; }
+#slide1:checked ~ .carousel .controls .prev1,
+#slide1:checked ~ .carousel .controls .next1{ display: block; }
+#slide2:checked ~ .carousel .controls .prev2,
+#slide2:checked ~ .carousel .controls .next2{ display: block; }
+#slide3:checked ~ .carousel .controls .prev3,
+#slide3:checked ~ .carousel .controls .next3{ display: block; }
+
+/* dots */
+.dots{ display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+.dots label{ cursor: pointer; font-size: 28px; color: #6b7280; line-height: 1; }
+#slide1:checked ~ .carousel .dots label[for="slide1"],
+#slide2:checked ~ .carousel .dots label[for="slide2"],
+#slide3:checked ~ .carousel .dots label[for="slide3"]{ color: #a9c6ff; }
+
+/* keyboard focus */
+.controls label:focus-visible, .dots label:focus-visible, .lb-close:focus-visible{
+     outline: 2px solid #60a5fa;
+     outline-offset: 2px;
+}
+
+/* Flipcards - single stage with navigation */
+.flipcards{ margin: 24px 0 8px; position: relative; }
+.flipcards input[type="radio"]{
+     position: absolute;
+     width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+     overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none;
+}
+.flipstage{ position: relative; height: 180px; margin: 0 auto; max-width: 680px; }
+.flipcard{ position: absolute; inset: 0; perspective: 1000px; display: none; }
+.flipcard-inner{ position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .6s ease; }
+.flipcard-face{ position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; background-color: #222222; color: #cbd7e6; border: 1px solid #111111; padding: 16px; backface-visibility: hidden; }
+.flipcard-back{ transform: rotateY(180deg); }
+.flipcard h4{ margin: 0 0 8px; font-weight: 700; }
+.flipcard a{ font-weight: 600; }
+
+/* show correct card */
+#fact1:checked ~ .flipstage .card1,
+#fact2:checked ~ .flipstage .card2,
+#fact3:checked ~ .flipstage .card3{ display: block; }
+
+/* flip on hover/focus */
+.flipcard:hover .flipcard-inner, .flipcard:focus-within .flipcard-inner{ transform: rotateY(180deg); }
+
+/* arrows */
+.f-controls label{ position: absolute; top: calc(50% - 28px); transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; width: 56px; height: 56px; line-height: 52px; text-align: center; border-radius: 50%; cursor: pointer; user-select: none; z-index: 2; border: 2px solid rgba(255,255,255,0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.4); font-size: 32px; }
+.f-prev{ left: calc(50% - 380px); }
+.f-next{ right: calc(50% - 380px); }
+.f-controls .f-prev, .f-controls .f-next{ display: none; }
+#fact1:checked ~ .f-controls .f-prev1, #fact1:checked ~ .f-controls .f-next1{ display: block; }
+#fact2:checked ~ .f-controls .f-prev2, #fact2:checked ~ .f-controls .f-next2{ display: block; }
+#fact3:checked ~ .f-controls .f-prev3, #fact3:checked ~ .f-controls .f-next3{ display: block; }
+
+/* dots */
+.f-dots{ display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+.f-dots label{ cursor: pointer; font-size: 28px; color: #6b7280; line-height: 1; }
+#fact1:checked ~ .f-dots label[for="fact1"],
+#fact2:checked ~ .f-dots label[for="fact2"],
+#fact3:checked ~ .f-dots label[for="fact3"]{ color: #e6f0fb; }
+
+/* Light mode for flipcards */
+#modeToggle:checked ~ #container .flipcard-face{ background-color: #ffffff; color: #111111; border-color: #dddddd; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+     .flipcard-inner{ transition: none; }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce){
+     .carousel .slides{ transition: none; }
+     img{ transition: none; }
+}
+
+/* PRINT styles */
+@media print{
+     #toggleLabel, #sidebar, .gallery, .lightbox{ display: none !important; }
+     body{ background: #fff; color: #000; }
+     #container{ border: none; width: auto; }
+     h1{ background: #fff; color: #000; border: none; }
+     p{ background: #fff; color: #000; border: none; }
+}
+     /* Light mode tweaks for carousel */
+     #modeToggle:checked ~ #container .carousel{
+          background: #ffffff;
+          border-color: #dddddd;
+     }
+     #modeToggle:checked ~ #container .carousel figcaption{ color: #333333; }
+     #modeToggle:checked ~ #container .dots label{ color: #999999; }
+     #modeToggle:checked ~ #container .dots label[for="slide1"],
+     #modeToggle:checked ~ #container .dots label[for="slide2"],
+     #modeToggle:checked ~ #container .dots label[for="slide3"]{ color: #333333; }
  /* LIGHT MODE  */
 #toggleLabel {
   display: inline-block;
@@ -253,10 +438,11 @@ a:active{
 #modeToggle:checked ~ #container p,
 #modeToggle:checked ~ #container h1,
 #modeToggle:checked ~ #container h2,
-#modeToggle:checked ~ #container h3 {
+#modeToggle:checked ~ #container h3,
+#modeToggle:checked ~ #container #sidebar {
   background-color: #ffffff;
   color: #111 !important;
-  border-color: #ddd;
+     border-color: #d7dee8;
 }
 
 #modeToggle:checked ~ #container a:link {
@@ -271,10 +457,11 @@ a:active{
   color: #000;
 }
 #modeToggle:checked ~ #container h1 {
-  background: #ffffff !important; /* solid white background */
-  color: #111 !important;
-  border-color: #ddd;
+     background: #ffffff !important; /* solid white background */
+     color: #111 !important;
+     border-color: #ddd;
 }
+/* Ensure #sidebar inherits link styles in light mode (no special overrides) */
 
 
   
