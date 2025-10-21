@@ -6,6 +6,7 @@
   </head>
   
   <body>
+    <a id="top"></a>
      <input type="checkbox" id="modeToggle" hidden>
      <input type="checkbox" id="musicToggle" hidden>
     <div class="top-controls" role="toolbar" aria-label="Display and audio controls">
@@ -51,11 +52,6 @@
     <!-- CSS-Only Image Carousel -->
     <h3>Photo Gallery</h3>
     <section class="gallery" aria-label="Image carousel">
-      <!-- carousel state -->
-      <input type="radio" name="slides" id="slide1" checked>
-      <input type="radio" name="slides" id="slide2">
-      <input type="radio" name="slides" id="slide3">
-
       <div class="carousel">
         <div class="slides">
           <figure class="slide">
@@ -70,25 +66,6 @@
             <img src="images/robot.jpg" alt="A robot representing engineering goals">
             <figcaption>Future goal: build helpful robots</figcaption>
           </figure>
-        </div>
-
-        <!-- arrows (contextual) -->
-        <div class="controls" aria-hidden="true">
-          <label class="prev prev1" for="slide3" title="Previous">‹</label>
-          <label class="next next1" for="slide2" title="Next">›</label>
-
-          <label class="prev prev2" for="slide1" title="Previous">‹</label>
-          <label class="next next2" for="slide3" title="Next">›</label>
-
-          <label class="prev prev3" for="slide2" title="Previous">‹</label>
-          <label class="next next3" for="slide1" title="Next">›</label>
-        </div>
-
-        <!-- dots -->
-        <div class="dots" role="tablist" aria-label="Choose slide">
-          <label for="slide1" role="tab" aria-controls="panel1">•</label>
-          <label for="slide2" role="tab" aria-controls="panel2">•</label>
-          <label for="slide3" role="tab" aria-controls="panel3">•</label>
         </div>
       </div>
     </section>
@@ -191,5 +168,6 @@
       </figure>
     </div>
     </div>
+    <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
   </body>
 </html>

@@ -328,38 +328,28 @@ body{ overflow-x: hidden; }
      pointer-events: none;
 }
 .carousel{ position: relative; border: 1px solid #111111; background: #111; padding: 16px; border-radius: 0; overflow: hidden; }
-.carousel .slides{ display: flex; border-radius: 6px; }
-.carousel .slide{ margin: 0; min-width: 100%; }
-.carousel img{ width: 100%; height: auto; display: block; border: none; }
+.carousel .slides{ display: flex; border-radius: 6px; width: 100%; animation: slide-cycle 12s infinite; }
+.carousel .slide{ margin: 0; min-width: 100%; flex: 0 0 100%; }
+.carousel img{ width: 100%; height: 380px; object-fit: cover; display: block; border: none; }
 .carousel figcaption{ padding: 8px 0; color: #cbd5e1; text-align: center; font-style: italic; }
 
 /* positioning the track using translateX */
-#slide1:checked ~ .carousel .slides{ transform: translateX(0%); }
-#slide2:checked ~ .carousel .slides{ transform: translateX(-100%); }
-#slide3:checked ~ .carousel .slides{ transform: translateX(-200%); }
-.carousel .slides{ transition: transform .6s cubic-bezier(.2,.6,.2,1); }
+/* autoplay animation */
+@keyframes slide-cycle{
+     0%{ transform: translateX(0%); }
+     30%{ transform: translateX(0%); }
+     35%{ transform: translateX(-100%); }
+     65%{ transform: translateX(-100%); }
+     70%{ transform: translateX(-200%); }
+     98%{ transform: translateX(-200%); }
+     100%{ transform: translateX(0%); }
+}
 
 /* arrows */
-.controls label{ position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #ffffff; width: 56px; height: 56px; line-height: 52px; text-align: center; border-radius: 50%; cursor: pointer; user-select: none; z-index: 2; border: 2px solid rgba(255,255,255,0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.4); font-size: 32px; }
-.controls .prev{ left: 12px; }
-.controls .next{ right: 12px; }
-.controls label:hover{ background: rgba(0,0,0,0.8); border-color: #ffffff; }
-
-/* show only the relevant pair of arrows depending on selected slide */
-.controls .prev, .controls .next{ display: none; }
-#slide1:checked ~ .carousel .controls .prev1,
-#slide1:checked ~ .carousel .controls .next1{ display: block; }
-#slide2:checked ~ .carousel .controls .prev2,
-#slide2:checked ~ .carousel .controls .next2{ display: block; }
-#slide3:checked ~ .carousel .controls .prev3,
-#slide3:checked ~ .carousel .controls .next3{ display: block; }
+/* controls removed for autoplay */
 
 /* dots */
-.dots{ display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
-.dots label{ cursor: pointer; font-size: 28px; color: #6b7280; line-height: 1; }
-#slide1:checked ~ .carousel .dots label[for="slide1"],
-#slide2:checked ~ .carousel .dots label[for="slide2"],
-#slide3:checked ~ .carousel .dots label[for="slide3"]{ color: #a9c6ff; }
+/* dots removed for autoplay */
 
 /* keyboard focus */
 .controls label:focus-visible, .dots label:focus-visible, .lb-close:focus-visible{
@@ -416,9 +406,32 @@ body{ overflow-x: hidden; }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce){
-     .carousel .slides{ transition: none; }
+     .carousel .slides{ transition: none; animation: none; }
      img{ transition: none; }
 }
+
+/* Prevent scroll jump on arrow click by keeping radios visually hidden but in-flow */
+.gallery input[type="radio"]{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none; }
+
+/* Disable hover-zoom inside carousel to avoid layout shift */
+.carousel img:hover{ transform: none; box-shadow: none; }
+
+/* Back to top button */
+.back-to-top{
+     position: fixed;
+     right: 16px;
+     bottom: 16px;
+     width: 44px; height: 44px; line-height: 44px;
+     text-align: center;
+     background: rgba(0,0,0,0.6);
+     color: #fff;
+     border: 1px solid #fff;
+     text-decoration: none;
+     font-size: 22px;
+     z-index: 1001;
+}
+.back-to-top:hover{ background: rgba(0,0,0,0.8); }
+#modeToggle:checked ~ .back-to-top{ background: rgba(0,0,0,0.6); color: #111; border-color: #111; }
 
 /* PRINT styles */
 @media print{
